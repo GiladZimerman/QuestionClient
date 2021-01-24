@@ -1,0 +1,27 @@
+<form nz-form [formGroup]="editQuestionForm" (ngSubmit)="onEditubmit()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Question name</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="QuestionErrorTip">
+      <input nz-input formControlName="name" value={{currentQuestion.name}} />
+      <ng-template #QuestionErrorTip let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input the question name!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Question Description</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please write something here!">
+      <textarea formControlName="description" nz-input rows="10" value={{currentQuestion.description}}></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <div class="button-container">
+        <button nz-button nzType="primary" [disabled]="!editQuestionForm.valid">Save</button>
+        <button nz-button nzType="text" (click)="cancelClick($event)">Cancel</button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>

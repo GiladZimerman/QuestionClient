@@ -1,0 +1,8 @@
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  border-radius: 10px;
+}

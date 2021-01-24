@@ -1,0 +1,43 @@
+<div class="layout">
+  <h1>Welcome Back!</h1>
+  <div class="container">
+    <form nz-form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="QuestionErrorTip">
+          <input nz-input formControlName="username" placeholder="User name" />
+          <ng-template #QuestionErrorTip let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Please entar a username
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzHasFeedback [nzErrorTip]="passwordErrorTip">
+          <input nz-input type="password" formControlName="password" nz-input placeholder="Password" />
+          <ng-template #passwordErrorTip let-control>
+            <ng-container *ngIf="control.hasError('minlength')">
+              Password must be at least 6 characters
+            </ng-container>
+            <ng-container *ngIf="control.hasError('required')">
+              Please entar a Password!
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              password must be less then 20 characters
+            </ng-container>
+            <ng-container *ngIf="control.hasError('pattern')">
+              Password must contains a uppercase lettar and a number
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <div class="button-container">
+            <button nz-button nzType="primary" [disabled]="!loginForm.valid">Login</button>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

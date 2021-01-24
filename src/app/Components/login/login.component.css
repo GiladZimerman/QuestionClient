@@ -1,0 +1,12 @@
+h1 {
+  display: flex;
+  justify-content: center;
+}
+input {
+  border-radius: 5px;
+}
+.container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}

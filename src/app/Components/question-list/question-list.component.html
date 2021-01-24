@@ -1,0 +1,55 @@
+<div class="layout">
+  <div class="layout-items">
+    <div class="search-container">
+      <nz-input-group class="search" [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="input search text" [(ngModel)]="Fillter" (ngModelChange)="search()" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+      <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+        Sort By
+        <i nz-icon nzType="down"></i>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="sortBy('name')">Name</li>
+          <li nz-menu-item (click)="sortBy('date')">Date</li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+    <table>
+      <tr>
+        <th class="small">id</th>
+        <th class="large">Name</th>
+        <th class="large">Date</th>
+        <th class="small"> </th>
+      </tr>
+      <tr class="item" *ngFor="let q of questions">
+        <th (click)="onQuestionClicked(q)">{{q.id}}</th>
+        <th (click)="onQuestionClicked(q)">{{q.name}}</th>
+        <th (click)="onQuestionClicked(q)">{{q.creationDate | date}}</th>
+        <th>
+          <i nz-icon nzType="edit" nzTheme="outline" (click)="openEdit(q.id)"></i>
+          <nz-drawer [nzBodyStyle]="{overflow:'auto', backgroundColor:'#dddddd'}" [nzMaskClosable]="false"
+            [nzWidth]="720" [nzVisible]="visibleEdit" nzTitle="Edit question" (nzOnClose)="closeEdit()">
+
+            <app-edit-question [currentQuestion]="question" (CancelEvent)="closeEdit()"></app-edit-question>
+          </nz-drawer>
+          <i nz-icon nzType="delete" nzTheme="outline" (click)="questionDelete(q.id)"></i>
+        </th>
+      </tr>
+    </table>
+    <div class="button">
+      <button nz-button nzType="primary" (click)="openAdd()">Add a question</button>
+    </div>
+    <nz-drawer [nzBodyStyle]="{overflow:'auto', backgroundColor:'#dddddd'}" [nzMaskClosable]="false" [nzWidth]="720"
+      [nzVisible]="visibleAdd" nzTitle="New question" (nzOnClose)="closeAdd()">
+      <app-add-question (AddEvent)="closeAdd()" (CancelEvent)="closeAdd()"></app-add-question>
+    </nz-drawer>
+    <nz-drawer [nzBodyStyle]="{overflow:'auto',backgroundColor:'#dddddd'}" [nzMaskClosable]="false" [nzWidth]="720"
+      [nzVisible]="visibleView" nzTitle={{question.name}} (nzOnClose)="closeView()">
+      <app-show-question [currentQuestion]="question" (CancelEvent)="closeView()"></app-show-question>
+    </nz-drawer>
+  </div>
+</div>
