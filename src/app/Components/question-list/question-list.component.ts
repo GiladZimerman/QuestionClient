@@ -38,7 +38,8 @@ export class QuestionListComponent implements OnInit {
 
 
   openAdd(): void {
-    this.VisibleData = true
+    this.readonly = false;
+    this.VisibleData = true;
   }
 
 
