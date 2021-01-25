@@ -34,7 +34,6 @@ export class QuestionService implements OnInit {
   }
 
   addQuestion(question: Question) {
-
     this.http.addQuestion(question).subscribe(data => {
       console.log(data);
       this.message.success(data["message"]);

@@ -27,6 +27,7 @@ import { ChartsComponent } from './Components/charts/charts.component';
 import { NzModalModule } from 'ng-zorro-antd/modal'
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './Components/home/home.component';
+import { QuestionDataComponent } from './Components/question-data/question-data.component';
 
 
 registerLocaleData(he);
@@ -41,6 +42,7 @@ registerLocaleData(he);
     LoginComponent,
     ChartsComponent,
     HomeComponent,
+    QuestionDataComponent,
 
   ],
   imports: [

@@ -4,9 +4,22 @@ h1 {
 }
 input {
   border-radius: 5px;
+  max-width: 194px;
 }
 .container {
   padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+.error {
+  display: flex;
+  flex-direction: column;
+  max-width: 194px;
+}
+.error > small {
+  margin-bottom: 3px;
+}
+.button-container {
   display: flex;
   justify-content: center;
 }

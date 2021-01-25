@@ -1,0 +1,27 @@
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  border-radius: 10px;
+}
+
+.layout {
+  margin-top: 50px;
+}
+.id {
+  font-size: 13px;
+  color: gray;
+}
+.content {
+  font-size: 15px;
+}
+.button-container-view {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.view-container {
+  padding: 10px;
+}

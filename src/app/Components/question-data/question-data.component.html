@@ -1,9 +1,9 @@
 <div class="layout">
-  <form nz-form [formGroup]="newQuestionForm" (ngSubmit)="onAddSubmit()">
+  <form [hidden]="isReadOnly" nz-form [formGroup]="QuestionForm" (ngSubmit)="onAddSubmit()">
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Question name</nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="QuestionErrorTip">
-        <input nz-input formControlName="name" placeholder="Please entar a name" />
+        <input nz-input formControlName="name" value={{currentQuestion?.name}} />
         <ng-template #QuestionErrorTip let-control>
           <ng-container *ngIf="control.hasError('required')">
             Please input the question name!
@@ -14,16 +14,24 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Question Description</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Please write something here!">
-        <textarea formControlName="description" nz-input rows="2" placeholder="write any thing"></textarea>
+        <textarea formControlName="description" nz-input rows="10" value={{currentQuestion?.description}}></textarea>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-control [nzOffset]="7" [nzSpan]="12">
         <div class="button-container">
-          <button nz-button nzType="primary" [disabled]="!newQuestionForm.valid">Create</button>
+          <button nz-button nzType="primary" [disabled]="!QuestionForm.valid">Create</button>
           <button nz-button nzType="text" (click)="cancelClick($event)">Cancel</button>
         </div>
       </nz-form-control>
     </nz-form-item>
   </form>
+  <div [hidden]="!isReadOnly" class="view-container">
+    <h4>{{currentQuestion.name}}</h4>
+    <p class="id">id: {{currentQuestion.id}}</p>
+    <span class="content">{{currentQuestion.description}}</span>
+    <div class="button-container-view">
+      <button nz-button nzType="primary" (click)="cancelClick($event)">Cancel</button>
+    </div>
+  </div>
 </div>

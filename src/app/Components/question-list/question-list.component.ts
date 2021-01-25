@@ -15,9 +15,8 @@ export class QuestionListComponent implements OnInit {
   questionsduplicate: Question[];
   question: Question = new Question();
   Fillter: string
-  visibleAdd = false;
-  visibleEdit = false;
-  visibleView = false;
+  VisibleData = false;
+  readonly = false;
   constructor(private service: QuestionService, private route: Router, private Model: NzModalService) { }
 
   ngOnInit(): void {
@@ -35,14 +34,19 @@ export class QuestionListComponent implements OnInit {
   onQuestionClicked(question: Question) {
     this.question = question;
     this.openView();
+  }
 
-  }
+
   openAdd(): void {
-    this.visibleAdd = true
+    this.VisibleData = true
   }
+
+
   closeAdd(): void {
-    this.visibleAdd = false;
+    this.VisibleData = false;
   }
+
+
   questionDelete(id: string): void {
     let q = this.questions.find(q => q.id === id);
     this.Model.confirm({
@@ -58,21 +62,15 @@ export class QuestionListComponent implements OnInit {
     });
   }
   openEdit(qid: string): void {
-    this.visibleView = false;
+    this.readonly = false;
     this.question = this.questions.find(q => q.id === qid)
-    console.log(this.question);
-    this.visibleEdit = true;
-  }
-  closeEdit(): void {
-    this.visibleEdit = false;
-
+    this.VisibleData = true
   }
   openView(): void {
-    this.visibleView = true;
+    this.readonly = true;
+    this.VisibleData = true;
   }
-  closeView(): void {
-    this.visibleView = false;
-  }
+
   sortBy(type: string) {
     if (type === "name") {
       this.questions.sort((a, b) => {

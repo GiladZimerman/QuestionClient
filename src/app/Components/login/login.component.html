@@ -6,9 +6,9 @@
         <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="QuestionErrorTip">
           <input nz-input formControlName="username" placeholder="User name" />
           <ng-template #QuestionErrorTip let-control>
-            <ng-container *ngIf="control.hasError('required')">
+            <small *ngIf="control.hasError('required')">
               Please entar a username
-            </ng-container>
+            </small>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
@@ -16,18 +16,20 @@
         <nz-form-control nzHasFeedback [nzErrorTip]="passwordErrorTip">
           <input nz-input type="password" formControlName="password" nz-input placeholder="Password" />
           <ng-template #passwordErrorTip let-control>
-            <ng-container *ngIf="control.hasError('minlength')">
-              Password must be at least 6 characters
-            </ng-container>
-            <ng-container *ngIf="control.hasError('required')">
-              Please entar a Password!
-            </ng-container>
-            <ng-container *ngIf="control.hasError('maxlength')">
-              password must be less then 20 characters
-            </ng-container>
-            <ng-container *ngIf="control.hasError('pattern')">
-              Password must contains a uppercase lettar and a number
-            </ng-container>
+            <div class="error">
+              <small *ngIf="control.hasError('minlength')">
+                Password must be at least 6 characters
+              </small>
+              <small *ngIf="control.hasError('required')">
+                Please entar a Password!
+              </small>
+              <small *ngIf="control.hasError('maxlength')">
+                password must be less then 20 characters
+              </small>
+              <small *ngIf="control.hasError('pattern')">
+                Password must contains a uppercase lettar and a number
+              </small>
+            </div>
           </ng-template>
         </nz-form-control>
       </nz-form-item>

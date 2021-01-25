@@ -31,11 +31,6 @@
         <th (click)="onQuestionClicked(q)">{{q.creationDate | date}}</th>
         <th>
           <i nz-icon nzType="edit" nzTheme="outline" (click)="openEdit(q.id)"></i>
-          <nz-drawer [nzBodyStyle]="{overflow:'auto', backgroundColor:'#dddddd'}" [nzMaskClosable]="false"
-            [nzWidth]="720" [nzVisible]="visibleEdit" nzTitle="Edit question" (nzOnClose)="closeEdit()">
-
-            <app-edit-question [currentQuestion]="question" (CancelEvent)="closeEdit()"></app-edit-question>
-          </nz-drawer>
           <i nz-icon nzType="delete" nzTheme="outline" (click)="questionDelete(q.id)"></i>
         </th>
       </tr>
@@ -43,13 +38,12 @@
     <div class="button">
       <button nz-button nzType="primary" (click)="openAdd()">Add a question</button>
     </div>
-    <nz-drawer [nzBodyStyle]="{overflow:'auto', backgroundColor:'#dddddd'}" [nzMaskClosable]="false" [nzWidth]="720"
-      [nzVisible]="visibleAdd" nzTitle="New question" (nzOnClose)="closeAdd()">
-      <app-add-question (AddEvent)="closeAdd()" (CancelEvent)="closeAdd()"></app-add-question>
-    </nz-drawer>
-    <nz-drawer [nzBodyStyle]="{overflow:'auto',backgroundColor:'#dddddd'}" [nzMaskClosable]="false" [nzWidth]="720"
-      [nzVisible]="visibleView" nzTitle={{question.name}} (nzOnClose)="closeView()">
-      <app-show-question [currentQuestion]="question" (CancelEvent)="closeView()"></app-show-question>
-    </nz-drawer>
+  </div>
+</div>
+<div [hidden]="!VisibleData" class="side-bar-bg">
+  <div class="side-bar">
+    <app-question-data (CancelEvent)="closeAdd()" [currentQuestion]="question" (AddEvent)="closeAdd()"
+      [isReadOnly]="readonly">
+    </app-question-data>
   </div>
 </div>
