@@ -28,7 +28,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal'
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './Components/home/home.component';
 import { QuestionDataComponent } from './Components/question-data/question-data.component';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker'
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { XychartComponent } from './Components/charts/xychart/xychart.component';
+import { PiechartComponent } from './Components/charts/piechart/piechart.component'
 
 
 registerLocaleData(he);
@@ -44,6 +46,8 @@ registerLocaleData(he);
     ChartsComponent,
     HomeComponent,
     QuestionDataComponent,
+    XychartComponent,
+    PiechartComponent,
 
   ],
   imports: [

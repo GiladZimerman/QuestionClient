@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { Question } from "../Models/Question.model";
 import { QuestionService } from "./question.service";
 
@@ -34,19 +35,22 @@ export class ChartsService implements OnInit {
   {
     "Day": "Saturday",
     "sum": 0
-  },
-  ]
+  },]
   question: Question[];
+  datasubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(undefined);
+  houressubject: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(undefined);
   hoursarr: number[] = [];
 
   constructor(private questionService: QuestionService) {
     this.questionService.questionSubject.subscribe(data => {
-      this.question = data;
+      if (data) {
+        this.question = data;
+        this.chartinfo();
+        this.datasubject.next(this.data);
+        this.houressubject.next(this.hoursarr);
+      }
     })
-
   }
-
-
   ngOnInit() { }
 
   chartinfo() {
@@ -60,6 +64,7 @@ export class ChartsService implements OnInit {
         this.hoursarr.push(time);
       }
     });
-
-
+    this.datasubject.next(this.data);
+    this.houressubject.next(this.hoursarr);
   }
+}
