@@ -1,5 +1,5 @@
 import { Question } from "src/app/Models/Question.model"
-import { Subject } from "rxjs"
+import { BehaviorSubject, Subject } from "rxjs"
 import { Injectable, OnInit } from "@angular/core";
 import { HttpService } from "./http.service";
 import { NzMessageService } from "ng-zorro-antd/message";
@@ -13,10 +13,12 @@ export class QuestionService implements OnInit {
   questions: Question[]
   question: Question
   currentquestionSubject: Subject<Question> = new Subject<Question>();
-  questionSubject: Subject<Question[]> = new Subject<Question[]>();
+  questionSubject: BehaviorSubject<Question[]> = new BehaviorSubject<Question[]>(undefined);
   constructor(private http: HttpService, private message: NzMessageService) {
+    this.getallQuestions();
   }
   ngOnInit() {
+
   }
   getallQuestions() {
     this.http.getallQuestions().subscribe(data => {

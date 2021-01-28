@@ -45,23 +45,30 @@ export class ChartsComponent implements OnInit {
   hoursarr: number[] = [];
   chart: am4charts.XYChart;
   piechart: am4charts.PieChart;
+
+
+
+
   constructor(private service: QuestionService) { }
 
   ngOnInit(): void {
-    this.service.getallQuestions();
     this.service.questionSubject.subscribe(data => {
-      this.question = data
-      this.chartinfo();
-      am4core.useTheme(am4themes_animated);
-      this.chart = am4core.create("chartdiv", am4charts.XYChart);
-      this.chart.data = this.data;
-      this.createAxis();
-      this.createAllSeries();
-      this.chart.legend = new am4charts.Legend();
-      this.piechart = am4core.create("piechartdiv", am4charts.PieChart);
-      this.piechart.data = this.data;
-      this.createpiechart();
+      console.log(data);
+      if (data) {
+        this.question = data
+        this.chartinfo();
+        am4core.useTheme(am4themes_animated);
+        this.chart = am4core.create("chartdiv", am4charts.XYChart);
+        this.chart.data = this.data;
+        this.createAxis();
+        this.createAllSeries();
+        this.chart.legend = new am4charts.Legend();
+        this.piechart = am4core.create("piechartdiv", am4charts.PieChart);
+        this.piechart.data = this.data;
+        this.createpiechart();
+      }
     });
+
 
     // Add data
 
@@ -92,7 +99,13 @@ export class ChartsComponent implements OnInit {
     valueAxis.min = 0;
   }
   createSeries(field, name) {
-
+    var tooltiphtml = `<center><strong>{categoryX}</strong></center>
+    <table>
+    <tr>
+    <th align="left">{name}</th>
+    <td>{valueY}</a>
+    </tr>
+    </table>`;
 
     let series = this.chart.series.push(new am4charts.ColumnSeries());
     series.name = name;
@@ -103,7 +116,8 @@ export class ChartsComponent implements OnInit {
     series.stacked = true;
 
     series.columns.template.width = am4core.percent(60);
-    series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+    // series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+    series.tooltipHTML = tooltiphtml;
 
     let labelBullet = series.bullets.push(new am4charts.LabelBullet());
     labelBullet.label.text = "{valueY}";

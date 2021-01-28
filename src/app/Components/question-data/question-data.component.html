@@ -27,9 +27,9 @@
     </nz-form-item>
   </form>
   <div [hidden]="!isReadOnly" class="view-container">
-    <h4>{{currentQuestion.name}}</h4>
-    <p class="id">id: {{currentQuestion.id}}</p>
-    <span class="content">{{currentQuestion.description}}</span>
+    <h4>{{currentQuestion?.name}}</h4>
+    <p class="id">id: {{currentQuestion?.id}}</p>
+    <span class="content">{{currentQuestion?.description}}</span>
     <div class="button-container-view">
       <button nz-button nzType="text" (click)="cancelClick($event)">Cancel</button>
     </div>

@@ -13,7 +13,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class QuestionListComponent implements OnInit {
   questions: Question[];
   questionsduplicate: Question[];
-  question: Question = new Question();
+  question: Question;
   Fillter: string
   VisibleData = false;
   readonly = false;
@@ -25,7 +25,6 @@ export class QuestionListComponent implements OnInit {
         this.questions = data
         this.questionsduplicate = data
       });
-      this.service.getallQuestions();
     }
     else {
       this.route.navigate([""]);

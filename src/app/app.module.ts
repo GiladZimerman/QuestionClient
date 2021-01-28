@@ -28,6 +28,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal'
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './Components/home/home.component';
 import { QuestionDataComponent } from './Components/question-data/question-data.component';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker'
 
 
 registerLocaleData(he);
@@ -61,7 +62,8 @@ registerLocaleData(he);
     NzDropDownModule,
     AppRoutingModule,
     NzModalModule,
-    RouterModule
+    RouterModule,
+    NzDatePickerModule
   ],
   providers: [{ provide: NZ_I18N, useValue: he_IL }],
   bootstrap: [AppComponent]
