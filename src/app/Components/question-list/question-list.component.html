@@ -26,7 +26,7 @@
         <th class="small"> </th>
       </tr>
       <tr class="item" *ngFor="let q of questions">
-        <th (click)="onQuestionClicked(q)">{{q.id}}</th>
+        <th (click)="onQuestionClicked(q)" [innerHTML]="q.id | id"></th>
         <th (click)="onQuestionClicked(q)">{{q.name}}</th>
         <th (click)="onQuestionClicked(q)">{{q.creationDate | date}}</th>
         <th>

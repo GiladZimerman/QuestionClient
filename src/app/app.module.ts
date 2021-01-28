@@ -30,7 +30,8 @@ import { HomeComponent } from './Components/home/home.component';
 import { QuestionDataComponent } from './Components/question-data/question-data.component';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { XychartComponent } from './Components/charts/xychart/xychart.component';
-import { PiechartComponent } from './Components/charts/piechart/piechart.component'
+import { PiechartComponent } from './Components/charts/piechart/piechart.component';
+import { IdPipe } from './pipes/id.pipe'
 
 
 registerLocaleData(he);
@@ -48,6 +49,7 @@ registerLocaleData(he);
     QuestionDataComponent,
     XychartComponent,
     PiechartComponent,
+    IdPipe,
 
   ],
   imports: [
