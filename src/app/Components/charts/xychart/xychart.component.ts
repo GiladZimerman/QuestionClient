@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import { ChartsService } from 'src/app/Services/charts.service';
@@ -11,30 +11,16 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./xychart.component.css']
 })
 export class XychartComponent implements OnInit, OnDestroy {
-  chartdata = []
-  hoursarr = []
+  chartdata = [];
+  hoursarr = [];
+  popularHouers = this.chartService.getPopularHoures();
+  showPopular: boolean;
   private subs: Subscription[] = [];
   chart: am4charts.XYChart;
   constructor(private chartService: ChartsService) { }
 
   ngOnInit(): void {
-    this.subs.push(this.chartService.houressubject.subscribe(data => {
-      if (data) {
-        this.hoursarr = data
-      }
-    }));
-    this.subs.push(this.chartService.datasubject.subscribe(data => {
-      if (data) {
-        this.chartdata = data;
-        this.chart = am4core.create("chartdiv", am4charts.XYChart);
-        this.chart.data = data;
-        this.createAxis();
-        this.createAllSeries();
-        this.chart.legend = new am4charts.Legend();
-      }
-    }))
-
-
+    this.xyChartInit();
   }
 
   ngOnDestroy() {
@@ -44,6 +30,19 @@ export class XychartComponent implements OnInit, OnDestroy {
     this.chart.dispose();
   }
 
+  xyChartInit() {
+    this.subs.push(this.chartService.houressubject.subscribe(data => {
+      if (data) {
+        this.hoursarr = data
+      }
+    }));
+    this.subs.push(this.chartService.datasubject.subscribe(data => {
+      if (data) {
+        this.chartdata = data;
+        this.makeChart(data);
+      }
+    }))
+  }
 
   createAxis() {
 
@@ -60,13 +59,6 @@ export class XychartComponent implements OnInit, OnDestroy {
 
 
   createSeries(field, name) {
-    // var tooltiphtml = `<center><strong>{categoryX}</strong></center>
-    // <table>
-    // <tr>
-    // <th align="left">{name}</th>
-    // <td>{valueY}</a>
-    // </tr>
-    // </table>`;
     let series = this.chart.series.push(new am4charts.ColumnSeries());
     series.name = name;
     series.dataFields.valueY = field;
@@ -76,8 +68,18 @@ export class XychartComponent implements OnInit, OnDestroy {
     series.stacked = true;
 
     series.columns.template.width = am4core.percent(60);
-    series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
-    // series.tooltipHTML = tooltiphtml;
+    // series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+    var tooltiphtml = `<div style="display:flex;flex-direction:column; width:150px;">
+    <div style="align-self:center;">
+    {categoryX}
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+    <div>{name}</div>
+    <div>{valueY} Questions</div>
+    </div>
+    </div>
+    `;
+    series.columns.template.tooltipHTML = tooltiphtml;
 
     let labelBullet = series.bullets.push(new am4charts.LabelBullet());
     labelBullet.label.text = "{valueY}";
@@ -87,13 +89,29 @@ export class XychartComponent implements OnInit, OnDestroy {
     return series;
   }
 
+  makeChart(data) {
+    if (this.chart)
+      this.chart.dispose();
+    this.chart = am4core.create("chartdiv", am4charts.XYChart);
+    this.chart.data = data;
+    this.createAxis();
+    if (this.showPopular)
+      this.createAllSeries(this.popularHouers);
+    else
+      this.createAllSeries(this.hoursarr);
+    this.chart.legend = new am4charts.Legend();
+  }
 
-  createAllSeries() {
-    debugger
-    this.hoursarr.forEach(h => {
+
+  createAllSeries(series: any[]) {
+    series.forEach(h => {
       this.createSeries(h.toString(), `${h}:00`);
     });
 
+  }
+
+  onShowPopular() {
+    this.makeChart(this.chartdata);
   }
 
 }

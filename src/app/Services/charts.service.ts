@@ -1,3 +1,5 @@
+import { map } from "@amcharts/amcharts4/.internal/core/utils/Iterator";
+import { object } from "@amcharts/amcharts4/core";
 import { Injectable, OnInit } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Question } from "../Models/Question.model";
@@ -37,14 +39,19 @@ export class ChartsService implements OnInit {
     "sum": 0
   },]
   question: Question[];
+  questionOrigin: Question[];
+  dateRange: Date[];
+  dateRangeSub: BehaviorSubject<Date[]> = new BehaviorSubject<Date[]>(undefined);
   datasubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(undefined);
   houressubject: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(undefined);
   hoursarr: number[] = [];
+  hoursdic = new Map();
 
   constructor(private questionService: QuestionService) {
     this.questionService.questionSubject.subscribe(data => {
       if (data) {
         this.question = data;
+        this.questionOrigin = data;
         this.chartinfo();
         this.datasubject.next(this.data);
         this.houressubject.next(this.hoursarr);
@@ -60,11 +67,69 @@ export class ChartsService implements OnInit {
       let day = CurrentDate.getDay();
       this.data[day][time] ? this.data[day][time] += 1 : this.data[day][time] = 1;
       this.data[day].sum++;
-      if (!this.hoursarr.includes(time)) {
-        this.hoursarr.push(time);
+      if (!this.hoursdic.get(time)) {
+        this.hoursdic.set(time, 1);
+      }
+      else {
+        let temp = this.hoursdic.get(time);
+        temp++;
+        this.hoursdic.set(time, temp);
       }
     });
     this.datasubject.next(this.data);
     this.houressubject.next(this.hoursarr);
   }
+
+  getPopularHoures() {
+    var mapAsc = new Map([...this.hoursdic.entries()].sort((a, b) => b[1] - a[1]));
+    console.log(mapAsc);
+    for (const iterator of mapAsc.keys()) {
+      this.hoursarr.push(iterator);
+    }
+    return this.hoursarr.splice(0, 5);
+  }
+
+  questionDateRange(res: Date[]) {
+    if (res?.length === 2) {
+      this.resetData();
+      this.question = this.questionOrigin?.filter(q => new Date(q.creationDate) >= res[0] && new Date(q.creationDate) <= res[1]);
+    }
+    else {
+      this.resetData();
+      this.question = this.questionService.questions;
+    }
+    this.chartinfo();
+  }
+
+  resetData() {
+    this.data = [{
+      "Day": "Sunday",
+      "sum": 0
+    },
+    {
+      "Day": "Monday",
+      "sum": 0
+    },
+    {
+      "Day": "Tuesday",
+      "sum": 0
+    },
+    {
+      "Day": "Wednesday",
+      "sum": 0
+    },
+    {
+      "Day": "Thursday",
+      "sum": 0
+    },
+    {
+      "Day": "Friday",
+      "sum": 0
+    },
+    {
+      "Day": "Saturday",
+      "sum": 0
+    },]
+  }
+
 }
