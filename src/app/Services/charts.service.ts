@@ -1,8 +1,6 @@
-import { map } from "@amcharts/amcharts4/.internal/core/utils/Iterator";
-import { object } from "@amcharts/amcharts4/core";
 import { Injectable, OnInit } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Question } from "../Models/Question.model";
+import { IQuestion } from "../Models/IQuestion.model";
 import { QuestionService } from "./question.service";
 
 @Injectable({
@@ -38,8 +36,8 @@ export class ChartsService implements OnInit {
     "Day": "Saturday",
     "sum": 0
   },]
-  question: Question[];
-  questionOrigin: Question[];
+  question: IQuestion[];
+  questionOrigin: IQuestion[];
   dateRange: Date[];
   dateRangeSub: BehaviorSubject<Date[]> = new BehaviorSubject<Date[]>(undefined);
   datasubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(undefined);
@@ -58,6 +56,8 @@ export class ChartsService implements OnInit {
       }
     })
   }
+
+
   ngOnInit() { }
 
   chartinfo() {

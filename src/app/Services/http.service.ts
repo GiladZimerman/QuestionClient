@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Question } from "src/app/Models/Question.model"
+import { IQuestion } from "src/app/Models/IQuestion.model"
 import { Observable } from "rxjs"
 import { Injectable } from "@angular/core";
-import { User } from "../Models/User.model";
+import { IUser } from "../Models/IUser.model";
 import { environment } from "../../environments/environment"
 
 @Injectable({
@@ -11,8 +11,10 @@ import { environment } from "../../environments/environment"
 
 export class HttpService {
   headers = () => new HttpHeaders({ "authorization": localStorage.getItem("token") });
-  constructor(private http: HttpClient) {
-  }
+
+  constructor(private http: HttpClient) { }
+
+
   getallQuestions(): Observable<object> {
     return this.http.get(`${environment.baseurl}/qa`, { headers: this.headers() });
 
@@ -25,7 +27,7 @@ export class HttpService {
   }
 
 
-  addQuestion(question: Question): Observable<object> {
+  addQuestion(question: IQuestion): Observable<object> {
     return this.http.post(`${environment.baseurl}/qa/create`, question, { headers: this.headers() });
   }
 
@@ -35,12 +37,12 @@ export class HttpService {
   }
 
 
-  editQuestion(id: string, newQuestion: Question): Observable<object> {
+  editQuestion(id: string, newQuestion: IQuestion): Observable<object> {
     return this.http.put(`${environment.baseurl}/qa/update/${id}`, newQuestion, { headers: this.headers() });
   }
 
 
-  loginUser(user: User): Observable<object> {
+  loginUser(user: IUser): Observable<object> {
     return this.http.post(`${environment.baseurl}/auth/login`, user);
   }
 }

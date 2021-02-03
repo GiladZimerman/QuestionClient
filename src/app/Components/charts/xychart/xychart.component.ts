@@ -24,6 +24,7 @@ export class XychartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.chartService.resetData();
     this.subs.forEach(item => {
       item.unsubscribe();
     });
@@ -69,18 +70,18 @@ export class XychartComponent implements OnInit, OnDestroy {
     series.stacked = true;
 
     series.columns.template.width = am4core.percent(60);
-    var tooltiphtml = `<div style="display:flex;flex-direction:column; width:150px;">
-    <div style="align-self:center;">
+    series.columns.template.tooltipHTML = `<div class="tooltip-layout">
+    <div class="tooltip-title">
     {categoryX}
     </div>
-    <div style="display:flex;justify-content:space-between;">
+    <div class="tooltip-content">
     <div>{name}</div>
     <div>{valueY} Questions</div>
     </div>
     </div>
     `;
-    series.columns.template.tooltipHTML = tooltiphtml;
-
+    series.tooltip.getFillFromObject = false;
+    series.tooltip.background.fill = am4core.color("white");
     let labelBullet = series.bullets.push(new am4charts.LabelBullet());
     labelBullet.label.text = "{valueY}";
     labelBullet.locationY = 0.5;

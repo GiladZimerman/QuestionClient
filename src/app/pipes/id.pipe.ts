@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class IdPipe implements PipeTransform {
 
   transform(id: string): string {
-    return `<small>${id[0]}</small><strong>${id.slice(1)}</strong>`;
+    return `<div class="pipe-layout"><div class="light">${id[0]}</div><div class="bold">${id.slice(1)}</div></div>`;
   }
 
 }

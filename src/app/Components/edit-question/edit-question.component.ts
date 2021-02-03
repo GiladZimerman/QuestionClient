@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Question } from 'src/app/Models/Question.model';
+import { IQuestion } from 'src/app/Models/IQuestion.model';
 import { QuestionService } from '../../Services/question.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { QuestionService } from '../../Services/question.service';
 })
 export class EditQuestionComponent implements OnInit {
   editQuestionForm: FormGroup;
-  @Input() currentQuestion: Question
+  @Input() currentQuestion: IQuestion
   @Output() CancelEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private service: QuestionService) { }

@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+.tooltip-layout {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  background-color: white;
+  color: black;
+}
+
+.tooltip-title {
+  align-self: center;
+}
+.tooltip-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.light {
+  font-size: smaller;
+}
+
+.bold {
+  font-weight: bold;
+  font-size: larger;
+}
+.pipe-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

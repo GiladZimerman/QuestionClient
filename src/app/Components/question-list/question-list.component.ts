@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { QuestionService } from "../../Services/question.service";
-import { Question } from "src/app/Models/Question.model";
+import { IQuestion } from "src/app/Models/IQuestion.model";
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
@@ -11,9 +11,9 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit {
-  questions: Question[];
-  questionsduplicate: Question[];
-  question: Question;
+  questions: IQuestion[];
+  questionsduplicate: IQuestion[];
+  question: IQuestion;
   Fillter: string
   VisibleData = false;
   readonly = false;
@@ -30,7 +30,7 @@ export class QuestionListComponent implements OnInit {
       this.route.navigate([""]);
     }
   }
-  onQuestionClicked(question: Question) {
+  onQuestionClicked(question: IQuestion) {
     this.question = question;
     this.openView();
   }

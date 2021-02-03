@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Question } from 'src/app/Models/Question.model';
+import { IQuestion } from 'src/app/Models/IQuestion.model';
 
 @Component({
   selector: 'app-show-question',
@@ -10,7 +10,7 @@ export class ShowQuestionComponent implements OnInit {
 
   @Output() CancelEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor() { }
-  @Input() currentQuestion: Question
+  @Input() currentQuestion: IQuestion
   ngOnInit(): void {
   }
   cancelClick() {

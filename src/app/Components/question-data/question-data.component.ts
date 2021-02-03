@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Question } from 'src/app/Models/Question.model';
+import { IQuestion } from 'src/app/Models/IQuestion.model';
 import { QuestionService } from 'src/app/Services/question.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { QuestionService } from 'src/app/Services/question.service';
 export class QuestionDataComponent implements OnInit {
 
   QuestionForm: FormGroup;
-  @Input() currentQuestion: Question
+  @Input() currentQuestion: IQuestion
   @Input() isReadOnly: boolean = false;
   @Output() AddEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() CancelEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
