@@ -19,7 +19,7 @@ export class PiechartComponent implements OnInit, OnDestroy {
     this.subs.push(this.chartService.datasubject.subscribe(data => {
       if (data) {
         this.piechart = am4core.create("piechartdiv", am4charts.PieChart);
-        this.piechart.data = data;
+        this.piechart.data = data.filter(d => d["sum"] > 0);
         this.createpiechart();
       }
     }))

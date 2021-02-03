@@ -13,9 +13,9 @@ import { Subscription } from 'rxjs';
 export class XychartComponent implements OnInit, OnDestroy {
   chartdata = [];
   hoursarr = [];
-  popularHouers = this.chartService.getPopularHoures();
   showPopular: boolean;
   private subs: Subscription[] = [];
+  popularHoures: any[];
   chart: am4charts.XYChart;
   constructor(private chartService: ChartsService) { }
 
@@ -39,6 +39,7 @@ export class XychartComponent implements OnInit, OnDestroy {
     this.subs.push(this.chartService.datasubject.subscribe(data => {
       if (data) {
         this.chartdata = data;
+        this.popularHoures = this.chartService.getPopularHoures();
         this.makeChart(data);
       }
     }))
@@ -68,7 +69,6 @@ export class XychartComponent implements OnInit, OnDestroy {
     series.stacked = true;
 
     series.columns.template.width = am4core.percent(60);
-    // series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
     var tooltiphtml = `<div style="display:flex;flex-direction:column; width:150px;">
     <div style="align-self:center;">
     {categoryX}
@@ -89,14 +89,15 @@ export class XychartComponent implements OnInit, OnDestroy {
     return series;
   }
 
-  makeChart(data) {
+  makeChart(data: any[]) {
     if (this.chart)
       this.chart.dispose();
     this.chart = am4core.create("chartdiv", am4charts.XYChart);
-    this.chart.data = data;
+    this.chart.data = data.filter(d => d["sum"] > 0);
     this.createAxis();
-    if (this.showPopular)
-      this.createAllSeries(this.popularHouers);
+    if (this.showPopular) {
+      this.createAllSeries(this.popularHoures);
+    }
     else
       this.createAllSeries(this.hoursarr);
     this.chart.legend = new am4charts.Legend();
@@ -105,7 +106,7 @@ export class XychartComponent implements OnInit, OnDestroy {
 
   createAllSeries(series: any[]) {
     series.forEach(h => {
-      this.createSeries(h.toString(), `${h}:00`);
+      typeof (h) == "number" ? this.createSeries(h.toString(), `${h}:00`) : this.createSeries(h, h);
     });
 
   }
@@ -113,5 +114,6 @@ export class XychartComponent implements OnInit, OnDestroy {
   onShowPopular() {
     this.makeChart(this.chartdata);
   }
+
 
 }

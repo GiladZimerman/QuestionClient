@@ -68,6 +68,7 @@ export class ChartsService implements OnInit {
       this.data[day][time] ? this.data[day][time] += 1 : this.data[day][time] = 1;
       this.data[day].sum++;
       if (!this.hoursdic.get(time)) {
+        this.hoursarr.push(time);
         this.hoursdic.set(time, 1);
       }
       else {
@@ -76,26 +77,42 @@ export class ChartsService implements OnInit {
         this.hoursdic.set(time, temp);
       }
     });
-    this.datasubject.next(this.data);
     this.houressubject.next(this.hoursarr);
+    this.datasubject.next(this.data);
   }
 
   getPopularHoures() {
     var mapAsc = new Map([...this.hoursdic.entries()].sort((a, b) => b[1] - a[1]));
-    console.log(mapAsc);
+    this.hoursarr = [];
     for (const iterator of mapAsc.keys()) {
       this.hoursarr.push(iterator);
     }
-    return this.hoursarr.splice(0, 5);
+    let popularhoures: any[] = this.hoursarr.slice(0, 5);
+    if (popularhoures.length === 5) {
+      popularhoures.push("others");
+      this.question.forEach(q => {
+        let CurrentDate = new Date(q.creationDate);
+        let time = CurrentDate.getHours();
+        let day = CurrentDate.getDay();
+        if (!popularhoures.includes(time)) {
+          this.data[day]["others"] ? this.data[day]["others"]++ : this.data[day]["others"] = 1;
+        }
+      });
+    }
+    return popularhoures;
   }
 
   questionDateRange(res: Date[]) {
     if (res?.length === 2) {
       this.resetData();
+      this.hoursdic.clear();
+      this.hoursarr = [];
       this.question = this.questionOrigin?.filter(q => new Date(q.creationDate) >= res[0] && new Date(q.creationDate) <= res[1]);
     }
     else {
       this.resetData();
+      this.hoursdic.clear();
+      this.hoursarr = [];
       this.question = this.questionService.questions;
     }
     this.chartinfo();
