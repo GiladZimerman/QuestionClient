@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { QuestionListComponent } from './Components/question-list/question-list.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AddQuestionComponent } from './Components/add-question/add-question.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { he_IL } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
@@ -19,8 +18,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { EditQuestionComponent } from './Components/edit-question/edit-question.component';
-import { ShowQuestionComponent } from './Components/show-question/show-question.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './Components/login/login.component';
 import { ChartsComponent } from './Components/charts/charts.component';
@@ -40,9 +37,6 @@ registerLocaleData(he);
   declarations: [
     AppComponent,
     QuestionListComponent,
-    AddQuestionComponent,
-    EditQuestionComponent,
-    ShowQuestionComponent,
     LoginComponent,
     ChartsComponent,
     HomeComponent,

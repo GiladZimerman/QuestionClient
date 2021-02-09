@@ -1,8 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { QuestionService } from "../../Services/question.service";
 import { IQuestion } from "src/app/Models/IQuestion.model";
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,38 +11,49 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.css']
 })
-export class QuestionListComponent implements OnInit {
+export class QuestionListComponent implements OnInit, OnDestroy {
   questions: IQuestion[];
   questionsduplicate: IQuestion[];
   question: IQuestion;
-  Fillter: string
-  VisibleData = false;
-  readonly = false;
+  private subs: Subscription[] = [];
+  Fillter: string // hold the search string
+  VisibleData = false; // when true the side bar is visible
+  readonly = false; // when true the side bar is in readonly when false its in edit mode
   constructor(private service: QuestionService, private route: Router, private Model: NzModalService) { }
+
 
   ngOnInit(): void {
     if (localStorage.getItem("token") !== null) {
-      this.service.questionSubject.subscribe(data => {
+      this.subs.push(this.service.questionSubject.subscribe(data => {
         this.questions = data
         this.questionsduplicate = data
-      });
+      }));
     }
     else {
       this.route.navigate([""]);
     }
   }
+
+
+  ngOnDestroy() {
+    this.subs.forEach(item => {
+      item.unsubscribe();
+    });
+  }
+
+
   onQuestionClicked(question: IQuestion) {
     this.question = question;
     this.openView();
   }
 
-
+  //opens the side-bar in edit mode
   openAdd(): void {
     this.readonly = false;
     this.VisibleData = true;
   }
 
-
+  //close the side-bar
   closeAdd(): void {
     this.VisibleData = false;
   }
@@ -61,15 +73,20 @@ export class QuestionListComponent implements OnInit {
 
     });
   }
+
+  //opens the side-bar in edit mode
   openEdit(qid: string): void {
     this.readonly = false;
     this.question = this.questions.find(q => q.id === qid)
     this.VisibleData = true
   }
+
+  //opens the side-bar in readonly
   openView(): void {
     this.readonly = true;
     this.VisibleData = true;
   }
+
 
   sortBy(type: string) {
     if (type === "name") {
@@ -91,6 +108,8 @@ export class QuestionListComponent implements OnInit {
       });
     }
   }
+
+
   search() {
     this.questions = this.questionsduplicate.filter(q => q.name.toLowerCase().includes(this.Fillter.toLowerCase()));
   }
