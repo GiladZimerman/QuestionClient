@@ -19,4 +19,12 @@ export class UserService {
     }, error => this.message.error("incorrect username or password"))
   };
 
+
+  checkToken(): boolean {
+    if (localStorage.getItem("token"))
+      return true;
+    else
+      return false;
+  }
+
 }

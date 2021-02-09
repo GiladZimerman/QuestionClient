@@ -23,15 +23,10 @@ export class QuestionListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    if (localStorage.getItem("token") !== null) {
-      this.subs.push(this.service.questionSubject.subscribe(data => {
-        this.questions = data
-        this.questionsduplicate = data
-      }));
-    }
-    else {
-      this.route.navigate([""]);
-    }
+    this.subs.push(this.service.questionSubject.subscribe(data => {
+      this.questions = data
+      this.questionsduplicate = data
+    }));
   }
 
 

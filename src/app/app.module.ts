@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { QuestionListComponent } from './Components/question-list/question-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { he_IL } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
@@ -29,6 +29,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { XychartComponent } from './Components/charts/xychart/xychart.component';
 import { PiechartComponent } from './Components/charts/piechart/piechart.component';
 import { IdPipe } from './pipes/id.pipe'
+import { CustomHttpInterceptor } from './custom-http-interceptor';
 
 
 registerLocaleData(he);
@@ -65,7 +66,14 @@ registerLocaleData(he);
     RouterModule,
     NzDatePickerModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: he_IL }],
+  providers: [
+    { provide: NZ_I18N, useValue: he_IL },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
