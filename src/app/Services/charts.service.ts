@@ -81,6 +81,7 @@ export class ChartsService implements OnInit {
     this.datasubject.next(this.data);
   }
 
+
   getPopularHoures() {
     var mapAsc = new Map([...this.hoursdic.entries()].sort((a, b) => b[1] - a[1]));
     this.hoursarr = [];

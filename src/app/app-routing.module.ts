@@ -11,16 +11,15 @@ const routes: Routes = [
     path: "", component: LoginComponent
   },
   {
-    path: '**', redirectTo: "home/question-list"
-  },
-  {
     path: "home", component: HomeComponent, children: [
-      { path: "", redirectTo: 'question-list', pathMatch: 'full' },
       { path: "question-list", component: QuestionListComponent },
-      { path: "charts", component: ChartsComponent }
+      { path: "charts", component: ChartsComponent },
+      { path: "", redirectTo: 'question-list', pathMatch: 'full' }
+
     ],
     canActivate: [LoginGuardGuard]
-  }
+  },
+  { path: '**', redirectTo: 'home/question-list', pathMatch: 'full' }
 ];
 
 @NgModule({

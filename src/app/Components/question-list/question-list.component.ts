@@ -19,13 +19,15 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   Fillter: string // hold the search string
   VisibleData = false; // when true the side bar is visible
   readonly = false; // when true the side bar is in readonly when false its in edit mode
+
+
   constructor(private service: QuestionService, private route: Router, private Model: NzModalService) { }
 
 
   ngOnInit(): void {
     this.subs.push(this.service.questionSubject.subscribe(data => {
-      this.questions = data
-      this.questionsduplicate = data
+      this.questions = data;
+      this.questionsduplicate = data;
     }));
   }
 
@@ -65,7 +67,6 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       nzOnOk: () => this.service.deleteQuestion(id),
       nzCancelText: 'No',
       nzOnCancel: () => { }
-
     });
   }
 

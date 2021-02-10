@@ -51,8 +51,6 @@ export class XychartComponent implements OnInit, OnDestroy {
     let categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "Day";
     categoryAxis.renderer.grid.template.location = 0;
-
-
     let valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.renderer.inside = true;
     valueAxis.renderer.labels.template.disabled = true;
