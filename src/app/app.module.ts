@@ -30,6 +30,8 @@ import { XychartComponent } from './Components/charts/xychart/xychart.component'
 import { PiechartComponent } from './Components/charts/piechart/piechart.component';
 import { IdPipe } from './pipes/id.pipe'
 import { CustomHttpInterceptor } from './custom-http-interceptor';
+import { TreeComponent } from './Components/tree/tree.component';
+import { NodeComponent } from './Components/tree/node/node.component';
 
 
 registerLocaleData(he);
@@ -45,6 +47,8 @@ registerLocaleData(he);
     XychartComponent,
     PiechartComponent,
     IdPipe,
+    TreeComponent,
+    NodeComponent,
 
   ],
   imports: [
