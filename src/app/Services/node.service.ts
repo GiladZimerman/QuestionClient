@@ -35,46 +35,5 @@ export class NodeService {
     });
     this.nodeSubject.next(this.nodes);
   }
-
-  onCheckNode(title: string, isLeaf: boolean) {
-    if (isLeaf) {
-      this.nodes.forEach(item => {
-        if (item.nodes.find(c => c.title == title)) {
-          if (item.nodes[item.nodes.findIndex(i => i.title == title)].isChecked == true) {
-            item.nodes[item.nodes.findIndex(i => i.title == title)].isChecked = false
-          }
-          else {
-            item.nodes[item.nodes.findIndex(i => i.title == title)].isChecked = true;
-            if (this.allLeafCheck(item.nodes)) {
-              item.isChecked = true;
-            }
-            else {
-              item.isChecked = false;
-            }
-          }
-        }
-      })
-    }
-    else {
-      this.nodes[this.nodes.findIndex(n => n.title == title)].isChecked ? this.nodes[this.nodes.findIndex(n => n.title == title)].isChecked = false
-        : this.nodes[this.nodes.findIndex(n => n.title == title)].isChecked = true;
-    }
-
-  }
-
-
-  allLeafCheck(nodes: INode[]) {
-    let flag = true
-    nodes.forEach(item => {
-      if (!item.isChecked)
-        flag = false
-    })
-    return flag;
-  }
-
-  clearTreeData() {
-    this.nodes = [];
-    this.nodeSubject.next(this.nodes);
-  }
 }
 

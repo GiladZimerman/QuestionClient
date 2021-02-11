@@ -14,6 +14,8 @@ export class NodeComponent implements OnInit {
   @Input() ischeck: boolean;
   @Output() itemclicked: EventEmitter<string> = new EventEmitter<string>();
 
+  collapse: boolean;
+
   constructor(private nodeService: NodeService) { }
 
   ngOnInit(): void {
@@ -24,6 +26,10 @@ export class NodeComponent implements OnInit {
     this.itemclicked.emit(title);
   }
 
+
+  onCollapseClick() {
+    this.collapse ? this.collapse = false : this.collapse = true;
+  }
 
 
 }
