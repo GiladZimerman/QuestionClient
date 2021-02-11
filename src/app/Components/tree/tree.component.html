@@ -1,14 +1,9 @@
 <div>
   <i nz-icon nzType="caret-down" nzTheme="outline"></i>
-  <input type="checkbox" />
+  <input type="checkbox" [(ngModel)]="selectAll" (change)="selectAllCheck()" />
   <label> Select All</label>
   <div *ngFor="let n of treeData" class="node-title">
-    <i nz-icon nzType="caret-down" nzTheme="outline"></i>
-    <input type="checkbox" [(ngModel)]="n.isChecked" (ngModelChange)="onNodeCheck(n.title)" />
-    <label> {{n.title}}</label>
-    <div *ngFor="let i of n.nodes" class="child-title">
-      <input type="checkbox" [(ngModel)]="i.isChecked" (ngModelChange)="onNodeCheck(i.title)" />
-      <label> {{i.title}}</label>
-    </div>
+    <app-node [title]="n.title" [nodes]=n.nodes [ischeck]="n.isChecked" (itemclicked)="onChildNodeCheck($event)">
+    </app-node>
   </div>
 </div>

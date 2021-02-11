@@ -39,11 +39,11 @@
       <button nz-button nzType="primary" (click)="openAdd()">Add a question</button>
     </div>
   </div>
-</div>
-<div [hidden]="!VisibleData" class="side-bar-bg">
-  <div class="side-bar">
-    <app-question-data (CancelEvent)="closeAdd()" [currentQuestion]="question" (AddEvent)="closeAdd()"
-      [isReadOnly]="readonly">
-    </app-question-data>
+  <div [hidden]="!VisibleData" class="side-bar-bg">
+    <div class="side-bar">
+      <app-question-data (CancelEvent)="closeAdd()" [currentQuestion]="question" (AddEvent)="closeAdd()"
+        [isReadOnly]="readonly">
+      </app-question-data>
+    </div>
   </div>
 </div>

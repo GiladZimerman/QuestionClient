@@ -4,7 +4,6 @@ import { IQuestion } from "src/app/Models/IQuestion.model";
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
-import { NodeService } from 'src/app/Services/node.service';
 
 
 @Component({
@@ -22,7 +21,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   readonly = false; // when true the side bar is in readonly when false its in edit mode
 
 
-  constructor(private service: QuestionService, private route: Router, private Model: NzModalService, private tempservice: NodeService) { }
+  constructor(private service: QuestionService, private route: Router, private Model: NzModalService) { }
 
 
   ngOnInit(): void {
@@ -41,7 +40,6 @@ export class QuestionListComponent implements OnInit, OnDestroy {
 
 
   onQuestionClicked(question: IQuestion) {
-    this.tempservice.treeDataGen();
     this.question = question;
     this.openView();
   }

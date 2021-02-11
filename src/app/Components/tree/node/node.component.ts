@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { INode } from 'src/app/Models/INode.model';
+import { NodeService } from 'src/app/Services/node.service';
 
 @Component({
   selector: 'app-node',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NodeComponent implements OnInit {
 
-  constructor() { }
+  @Input() title: string;
+  @Input() nodes: INode[];
+  @Input() ischeck: boolean;
+  @Output() itemclicked: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(private nodeService: NodeService) { }
 
   ngOnInit(): void {
   }
+
+
+  onItemClicked(title: string) {
+    this.itemclicked.emit(title);
+  }
+
+
 
 }
