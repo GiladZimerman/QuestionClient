@@ -14,6 +14,7 @@ export class TreeComponent implements OnInit, OnDestroy {
   treeDataDuplicate: INode[]
   treenodesDuplicate: INode[]
   selectAll: boolean;
+  onClickselectAll: boolean = false;
   subs: Subscription[] = [];
   serach: string;
 
@@ -63,15 +64,18 @@ export class TreeComponent implements OnInit, OnDestroy {
 
 
   selectAllCheck() {
-    this.selectAll ? this.treeData.forEach(item => {
-      item.isChecked = false;
-      this.NodeCheck(item.title);
-    }) :
-      this.treeData.forEach(item => {
-        item.isChecked = true;
-        this.NodeCheck(item.title);
-      })
-
+    this.onClickselectAll = this.selectAll
+    this.treeData.forEach(item => {
+      item.isChecked = this.onClickselectAll;
+    })
+    // this.selectAll ? this.treeData.forEach(item => {
+    //   item.isChecked = false;
+    //   // this.NodeCheck(item.title);
+    // }) :
+    //   this.treeData.forEach(item => {
+    //     item.isChecked = true;
+    //     //this.NodeCheck(item.title);
+    //   })
   }
 
   onSerach() {
