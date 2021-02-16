@@ -1,0 +1,9 @@
+.tree-container {
+  width: auto;
+}
+.layout {
+  display: flex;
+}
+.charts-container {
+  width: 90%;
+}

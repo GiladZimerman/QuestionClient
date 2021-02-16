@@ -1,10 +1,12 @@
 <div>
-  <i (click)="onCollapseClick()" *ngIf="nodes!=null" nz-icon nzType="caret-down" nzTheme="outline"></i>
-  <input type="checkbox" [(ngModel)]="ischeck" (change)="onItemClicked(title)" />
-  <label> {{title}}</label>
-  <div *ngIf="nodes!=null" [hidden]="collapse">
-    <div *ngFor="let n of nodes" class="child-title">
-      <app-node [title]="n.title" [nodes]="n.nodes" [ischeck]="n.isChecked" (itemclicked)="onItemClicked($event)">
+  <div class="title">
+    <i (click)="onCollapseClick()" *ngIf="value.nodes!=null" nz-icon nzType="caret-down" nzTheme="outline"></i>
+    <input type="checkbox" [(ngModel)]="value.isChecked" (change)="childCheck(value)" />
+    <label title="{{title}}"> {{title}}</label>
+  </div>
+  <div *ngIf="value.nodes!=null" [hidden]="collapse">
+    <div *ngFor="let n of value.nodes" class="child-title">
+      <app-node [title]="n.title" [value]="n" (itemclicked)="onItemClicked(n.isChecked)">
       </app-node>
     </div>
   </div>

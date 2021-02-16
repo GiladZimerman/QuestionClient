@@ -1,9 +1,12 @@
 <div>
+  <div>
+    <input type="search" placeholder="Search" [(ngModel)]="serach" (ngModelChange)="onSerach()" />
+  </div>
   <i nz-icon nzType="caret-down" nzTheme="outline"></i>
   <input type="checkbox" [(ngModel)]="selectAll" (change)="selectAllCheck()" />
   <label> Select All</label>
   <div *ngFor="let n of treeData" class="node-title">
-    <app-node [title]="n.title" [nodes]=n.nodes [ischeck]="n.isChecked" (itemclicked)="onChildNodeCheck($event)">
+    <app-node [title]="n.title" [value]="n" (itemClicked)="onNodeCheck(n)">
     </app-node>
   </div>
 </div>

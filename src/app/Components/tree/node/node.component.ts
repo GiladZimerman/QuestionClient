@@ -10,10 +10,8 @@ import { NodeService } from 'src/app/Services/node.service';
 export class NodeComponent implements OnInit {
 
   @Input() title: string;
-  @Input() nodes: INode[];
-  @Input() ischeck: boolean;
-  @Output() itemclicked: EventEmitter<string> = new EventEmitter<string>();
-
+  @Input() value: INode;
+  @Output() itemClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
   collapse: boolean;
 
   constructor(private nodeService: NodeService) { }
@@ -22,8 +20,28 @@ export class NodeComponent implements OnInit {
   }
 
 
-  onItemClicked(title: string) {
-    this.itemclicked.emit(title);
+  onItemClicked(value: boolean) {
+    let flag = true;
+    if (this.value.nodes) {
+      this.value.nodes.forEach(item => {
+        if (item.isChecked == false)
+          flag = item.isChecked;
+      });
+      this.value.isChecked = flag;
+    }
+  }
+
+
+  childcheck(node: INode) {
+    if (node.nodes) {
+      node.nodes.forEach(item => {
+        this.childcheck(item);
+      })
+    }
+    else {
+      node.isChecked = this.value.isChecked;
+    }
+    this.itemClicked.emit(node.isChecked);
   }
 
 
