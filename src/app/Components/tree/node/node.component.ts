@@ -35,9 +35,11 @@ export class NodeComponent implements OnInit {
   onItemClicked(value: boolean) {
     let counter = 0;
     let interCounter = 0;
+    let shownCounter = 0;
     if (this.value.nodes) {
       this.value.nodes.forEach(item => {
         if (item.isShown == true) {
+          shownCounter++;
           if (item.isChecked)
             counter++;
           else if (item.indeterminate == true)
@@ -49,11 +51,11 @@ export class NodeComponent implements OnInit {
       this.value.indeterminate = true;
       this.value.isChecked = false;
     }
-    else if (counter < this.value.nodes.length && counter > 0) {
+    else if (counter < shownCounter && counter > 0) {
       this.value.indeterminate = true;
       this.value.isChecked = false;
     }
-    else if (counter == this.value.nodes.length) {
+    else if (counter == shownCounter && counter > 0) {
       this.value.indeterminate = false;
       this.value.isChecked = true;
     }
@@ -74,6 +76,7 @@ export class NodeComponent implements OnInit {
         this.childCheck(item);
       })
     }
+    this.value.indeterminate = false;
     this.itemClicked.emit(node.isChecked);
   }
 

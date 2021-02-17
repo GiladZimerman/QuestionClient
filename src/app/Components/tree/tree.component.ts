@@ -72,14 +72,36 @@ export class TreeComponent implements OnInit {
 
 
   isCheckedAfterSearch(node: INode) {
-    let flag = true;
-    node.nodes.forEach(item => {
-      if (item.isShown == true) {
-        if (item.isChecked == false)
-          flag = false;
-      }
-    })
-    node.isChecked = flag;
+    let counter = 0;
+    let interCounter = 0;
+    let shownCounter = 0;
+    if (node.nodes) {
+      node.nodes.forEach(item => {
+        if (item.isShown == true) {
+          shownCounter++;
+          if (item.isChecked)
+            counter++;
+          else if (item.indeterminate == true)
+            interCounter++;
+        }
+      });
+    }
+    if (interCounter > 0) {
+      node.indeterminate = true;
+      node.isChecked = false;
+    }
+    else if (counter < shownCounter && counter > 0) {
+      node.indeterminate = true;
+      node.isChecked = false;
+    }
+    else if (counter == shownCounter && counter > 0) {
+      node.indeterminate = false;
+      node.isChecked = true;
+    }
+    else {
+      node.indeterminate = false;
+      node.isChecked = false;
+    }
   }
 }
 
