@@ -27,10 +27,10 @@ export class NodeService {
     this.questions.forEach(q => {
       let month = new Date(q.creationDate).toLocaleString('en-US', options);
       if (!this.nodes.find(c => c.title == month)) {
-        this.nodes.push({ title: month, nodes: [{ title: q.name, nodes: null, isChecked: false, isLeaf: true }], isChecked: false, isLeaf: false });
+        this.nodes.push({ title: month, nodes: [{ title: q.name, nodes: null, isChecked: false, isShown: true }], isChecked: false, isShown: true });
       }
       else {
-        this.nodes[this.nodes.findIndex(c => c.title == month)].nodes.push({ title: q.name, nodes: null, isChecked: false, isLeaf: true });
+        this.nodes[this.nodes.findIndex(c => c.title == month)].nodes.push({ title: q.name, nodes: null, isChecked: false, isShown: true });
       }
     });
     this.nodeSubject.next(this.nodes);

@@ -1,85 +1,85 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 import { INode } from 'src/app/Models/INode.model';
-import { NodeService } from 'src/app/Services/node.service';
 
 @Component({
   selector: 'app-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.css']
 })
-export class TreeComponent implements OnInit, OnDestroy {
-
-  @Input() treeData: INode[];
-  treeDataDuplicate: INode[]
-  treenodesDuplicate: INode[]
+export class TreeComponent implements OnInit {
+  @Input()
+  get data(): INode[] { return this._data; }
+  set data(value: INode[]) {
+    this._data = value;
+    this.addSelectall(value)
+  }
+  private _data;
   selectAll: boolean;
+  treeData: INode = { title: "Select all", nodes: [], isChecked: false, isShown: true };
   onClickselectAll: boolean = false;
-  subs: Subscription[] = [];
   serach: string;
 
 
-  constructor(private nodeService: NodeService) { }
+  constructor() { }
 
 
-  ngOnInit(): void {
-    this.subs.push(this.nodeService.nodeSubject.subscribe(data => {
-      if (data) {
-        this.treeData = data;
-        this.treeDataDuplicate = data;
-      }
-    }))
+  ngOnInit(): void { }
+
+  addSelectall(value: INode[]) {
+    if (value) {
+      this.treeData.nodes = value;
+    }
   }
 
 
-  ngOnDestroy() {
-    this.subs.forEach(item => {
-      item.unsubscribe();
+  onSearch() {
+    this.data.forEach(item => {
+      if (item.nodes)
+        this.childSearch(item);
     });
+    this.isCheckedAfterSearch(this.treeData);
   }
 
 
-  onNodeCheck(node: INode) {
-    let flag = true;
-    this.treeData.forEach(item => {
-      if (item.isChecked == false) {
-        flag = false;
-      }
-    });
-    this.selectAll = flag;
-  }
-
-
-  NodeCheck(title: string) {
-    this.treeData[this.treeData.findIndex(c => c.title == title)].isChecked ? this.treeData[this.treeData.findIndex(c => c.title == title)].isChecked = false
-      : this.treeData[this.treeData.findIndex(c => c.title == title)].isChecked = true;
-    this.treeData[this.treeData.findIndex(c => c.title == title)].isChecked ? this.treeData[this.treeData.findIndex(c => c.title == title)].nodes.
-      forEach(item => {
-        item.isChecked = true
-      }) :
-      this.treeData[this.treeData.findIndex(c => c.title == title)].nodes.forEach(item => {
-        item.isChecked = false;
+  childSearch(child: INode) {
+    if (child.nodes) {
+      child.nodes.forEach(item => {
+        this.childSearch(item);
       })
+      this.allChildShowen(child);
+      this.isCheckedAfterSearch(child);
+    }
+    else {
+      if (!child.title.toLowerCase().includes(this.serach.toLowerCase())) {
+        child.isShown = false;
+        child.isChecked = false;
+      }
+      else {
+        child.isShown = true;
+      }
+    }
   }
 
 
-  selectAllCheck() {
-    this.onClickselectAll = this.selectAll
-    this.treeData.forEach(item => {
-      item.isChecked = this.onClickselectAll;
+  allChildShowen(node: INode) {
+    let flag = false;
+    node.nodes.forEach(item => {
+      if (item.isShown == true)
+        flag = true;
     })
-    // this.selectAll ? this.treeData.forEach(item => {
-    //   item.isChecked = false;
-    //   // this.NodeCheck(item.title);
-    // }) :
-    //   this.treeData.forEach(item => {
-    //     item.isChecked = true;
-    //     //this.NodeCheck(item.title);
-    //   })
+    node.isShown = flag;
   }
 
-  onSerach() {
 
+  isCheckedAfterSearch(node: INode) {
+    let flag = true;
+    node.nodes.forEach(item => {
+      if (item.isShown == true) {
+        if (item.isChecked == false)
+          flag = false;
+      }
+    })
+    node.isChecked = flag;
   }
 }
 

@@ -1,7 +1,7 @@
 <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
 <div class="layout">
   <div class="tree-container">
-    <app-tree></app-tree>
+    <app-tree [data]="treedata"></app-tree>
   </div>
   <div class="charts-container">
     <app-xychart></app-xychart>

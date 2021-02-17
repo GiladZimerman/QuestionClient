@@ -1,13 +1,16 @@
 <div>
-  <div *ngIf="!hide" class="title">
-    <i (click)="onCollapseClick()" *ngIf="value.nodes!=null" nz-icon nzType="caret-down" nzTheme="outline"></i>
-    <input type="checkbox" [(ngModel)]="value.isChecked" (ngModelChange)="childCheck(value)" />
+  <div *ngIf="value.isShown" class="title">
+    <i *ngIf="!collapse && value.nodes!=null" (click)="onCollapseClick()" nz-icon nzType="caret-down"
+      nzTheme="outline"></i>
+    <i *ngIf="collapse && value.nodes!=null" (click)="onCollapseClick()" nz-icon nzType="caret-right"
+      nzTheme="outline"></i>
+    <input type="checkbox" [(ngModel)]="value.isChecked" (change)="childCheck(value)"
+      [indeterminate]="value.indeterminate" />
     <label title="{{title}}"> {{title}}</label>
   </div>
   <div *ngIf="value.nodes!=null" [hidden]="collapse">
     <div *ngFor="let n of value.nodes" class="child-title">
-      <app-node [title]="n.title" [value]="n" [serachValue]=" serachValue" (itemClicked)="onItemClicked(n.isChecked)"
-        [selectAll]="selectAll">
+      <app-node [title]="n.title" [value]="n" [showValue]="n.isShown" (itemClicked)="onItemClicked(n.isChecked)">
       </app-node>
     </div>
   </div>
