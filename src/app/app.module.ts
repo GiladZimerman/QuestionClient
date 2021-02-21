@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { QuestionListComponent } from './Components/question-list/question-list.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { he_IL } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import he from '@angular/common/locales/he';
@@ -30,6 +30,9 @@ import { XychartComponent } from './Components/charts/xychart/xychart.component'
 import { PiechartComponent } from './Components/charts/piechart/piechart.component';
 import { IdPipe } from './pipes/id.pipe'
 import { CustomHttpInterceptor } from './custom-http-interceptor';
+import { TreeComponent } from './Components/tree/tree.component';
+import { NodeComponent } from './Components/tree/node/node.component';
+import { StoreModule } from '@ngrx/store';
 
 
 registerLocaleData(he);
@@ -45,6 +48,8 @@ registerLocaleData(he);
     XychartComponent,
     PiechartComponent,
     IdPipe,
+    TreeComponent,
+    NodeComponent,
 
   ],
   imports: [
@@ -64,10 +69,11 @@ registerLocaleData(he);
     AppRoutingModule,
     NzModalModule,
     RouterModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    StoreModule.forRoot({}, {})
   ],
   providers: [
-    { provide: NZ_I18N, useValue: he_IL },
+    { provide: NZ_I18N, useValue: en_US },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,

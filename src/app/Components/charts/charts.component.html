@@ -1,3 +1,10 @@
 <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
-<app-xychart></app-xychart>
-<app-piechart></app-piechart>
+<div class="layout">
+  <div class="tree-container">
+    <app-tree [data]="treedata"></app-tree>
+  </div>
+  <div class="charts-container">
+    <app-xychart></app-xychart>
+    <app-piechart></app-piechart>
+  </div>
+</div>

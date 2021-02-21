@@ -13,11 +13,11 @@ import { Subscription } from 'rxjs';
 })
 export class QuestionListComponent implements OnInit, OnDestroy {
   questions: IQuestion[];
-  questionsduplicate: IQuestion[];
+  questionsDuplicate: IQuestion[];
   question: IQuestion;
   private subs: Subscription[] = [];
-  Fillter: string // hold the search string
-  VisibleData = false; // when true the side bar is visible
+  fillter: string // hold the search string
+  visibleData = false; // when true the side bar is visible
   readonly = false; // when true the side bar is in readonly when false its in edit mode
 
 
@@ -27,7 +27,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.push(this.service.questionSubject.subscribe(data => {
       this.questions = data;
-      this.questionsduplicate = data;
+      this.questionsDuplicate = data;
     }));
   }
 
@@ -47,12 +47,12 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   //opens the side-bar in edit mode
   openAdd(): void {
     this.readonly = false;
-    this.VisibleData = true;
+    this.visibleData = true;
   }
 
   //close the side-bar
   closeAdd(): void {
-    this.VisibleData = false;
+    this.visibleData = false;
   }
 
 
@@ -74,13 +74,13 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   openEdit(qid: string): void {
     this.readonly = false;
     this.question = this.questions.find(q => q.id === qid)
-    this.VisibleData = true
+    this.visibleData = true
   }
 
   //opens the side-bar in readonly
   openView(): void {
     this.readonly = true;
-    this.VisibleData = true;
+    this.visibleData = true;
   }
 
 
@@ -107,6 +107,6 @@ export class QuestionListComponent implements OnInit, OnDestroy {
 
 
   search() {
-    this.questions = this.questionsduplicate.filter(q => q.name.toLowerCase().includes(this.Fillter.toLowerCase()));
+    this.questions = this.questionsDuplicate.filter(q => q.name.toLowerCase().includes(this.fillter.toLowerCase()));
   }
 }

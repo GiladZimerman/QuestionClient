@@ -1,0 +1,7 @@
+<div>
+  <div>
+    <input type="search" placeholder="Search" [(ngModel)]="serach" (ngModelChange)="onSearch()" />
+  </div>
+  <app-node [title]="treeData.title" [value]="treeData" [showValue]="treeData.isShown">
+  </app-node>
+</div>
