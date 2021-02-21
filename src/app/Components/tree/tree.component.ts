@@ -11,6 +11,7 @@ export class TreeComponent implements OnInit {
   get data(): INode[] { return this._data; }
   set data(value: INode[]) {
     this._data = value;
+
     this.addSelectall(value)
   }
   private _data;
@@ -27,6 +28,11 @@ export class TreeComponent implements OnInit {
 
   addSelectall(value: INode[]) {
     if (value) {
+      if (this.treeData.nodes.length > 0) {
+        this.treeData.nodes = [];
+        console.log(value);
+
+      }
       this.treeData.nodes = value;
     }
   }

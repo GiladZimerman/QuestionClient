@@ -32,6 +32,7 @@ import { IdPipe } from './pipes/id.pipe'
 import { CustomHttpInterceptor } from './custom-http-interceptor';
 import { TreeComponent } from './Components/tree/tree.component';
 import { NodeComponent } from './Components/tree/node/node.component';
+import { StoreModule } from '@ngrx/store';
 
 
 registerLocaleData(he);
@@ -68,7 +69,8 @@ registerLocaleData(he);
     AppRoutingModule,
     NzModalModule,
     RouterModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    StoreModule.forRoot({}, {})
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

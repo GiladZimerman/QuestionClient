@@ -1,12 +1,10 @@
 <div>
   <div *ngIf="value.isShown" class="title">
-    <i *ngIf="!collapse && value.nodes!=null" (click)="onCollapseClick()" nz-icon nzType="caret-down"
-      nzTheme="outline"></i>
-    <i *ngIf="collapse && value.nodes!=null" (click)="onCollapseClick()" nz-icon nzType="caret-right"
-      nzTheme="outline"></i>
+    <i [ngClass]="collapse? 'icon-up':'icon-down'" *ngIf="value.nodes!=null" (click)="onCollapseClick()" nz-icon
+      nzType="caret-right" nzTheme="outline"></i>
     <input type="checkbox" [(ngModel)]="value.isChecked" (change)="childCheck(value)"
       [indeterminate]="value.indeterminate" />
-    <label title="{{title}}"> {{title}}</label>
+    <label title="{{title}}" (click)="onLabelClicked()"> {{title}}</label>
   </div>
   <div *ngIf="value.nodes!=null" [hidden]="collapse">
     <div *ngFor="let n of value.nodes" class="child-title">

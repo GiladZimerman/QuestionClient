@@ -7,3 +7,22 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.title:hover {
+  cursor: pointer;
+}
+input:hover {
+  cursor: pointer;
+}
+label:hover {
+  cursor: pointer;
+}
+label {
+  user-select: none;
+}
+.icon-up {
+  transition: 0.25s;
+}
+.icon-down {
+  transform: rotate(90deg);
+  transition: 0.25s;
+}

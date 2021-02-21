@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { INode } from 'src/app/Models/INode.model';
 
 @Component({
@@ -94,6 +94,11 @@ export class NodeComponent implements OnInit {
 
   onCollapseClick() {
     this.collapse ? this.collapse = false : this.collapse = true;
+  }
+
+  onLabelClicked() {
+    this.value.isChecked ? this.value.isChecked = false : this.value.isChecked = true;
+    this.childCheck(this.value);
   }
 
 }

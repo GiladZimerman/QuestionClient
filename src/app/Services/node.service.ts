@@ -26,11 +26,12 @@ export class NodeService {
     const options = { month: 'long' };
     this.questions.forEach(q => {
       let month = new Date(q.creationDate).toLocaleString('en-US', options);
-      if (!this.nodes.find(c => c.title == month)) {
+      let node = this.nodes.find(c => c.title == month);
+      if (!node) {
         this.nodes.push({ title: month, nodes: [{ title: q.name, nodes: null, isChecked: false, isShown: true }], isChecked: false, isShown: true });
       }
       else {
-        this.nodes[this.nodes.findIndex(c => c.title == month)].nodes.push({ title: q.name, nodes: null, isChecked: false, isShown: true });
+        node.nodes.push({ title: q.name, nodes: null, isChecked: false, isShown: true });
       }
     });
     this.nodeSubject.next(this.nodes);
