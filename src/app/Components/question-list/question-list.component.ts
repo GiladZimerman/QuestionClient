@@ -3,7 +3,10 @@ import { QuestionService } from "../../Services/question.service";
 import { IQuestion } from "src/app/Models/IQuestion.model";
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromQuestionList from '../../Services/store/question.reducer';
+import * as QuestionListActions from '../../Services/store/question.actions';
 
 
 @Component({
@@ -13,22 +16,38 @@ import { Subscription } from 'rxjs';
 })
 export class QuestionListComponent implements OnInit, OnDestroy {
   questions: IQuestion[];
+  tempLoading$: Observable<boolean>;
+  tempError$: Observable<Error>;
   questionsDuplicate: IQuestion[];
   question: IQuestion;
   private subs: Subscription[] = [];
   fillter: string // hold the search string
   visibleData = false; // when true the side bar is visible
-  readonly = false; // when true the side bar is in readonly when false its in edit mode
+  readOnly = false; // when true the side bar is in readonly when false its in edit mode
 
 
-  constructor(private service: QuestionService, private route: Router, private Model: NzModalService) { }
+  constructor(private service: QuestionService,
+    private route: Router,
+    private Model: NzModalService,
+    private store: Store<fromQuestionList.AppState>) { }
 
 
   ngOnInit(): void {
-    this.subs.push(this.service.questionSubject.subscribe(data => {
+    this.store.select(store => store.questionList.Questions).subscribe(data => {
       this.questions = data;
       this.questionsDuplicate = data;
-    }));
+
+    })
+    this.tempLoading$ = this.store.select(store => store.questionList.loading);
+    this.tempError$ = this.store.select(store => store.questionList.error);
+
+    this.store.dispatch(new QuestionListActions.LoadQuestionsAction());
+    // this.subs.push(this.service.questionSubject.subscribe(data => {
+    //   if (data) {
+    //     this.questions = data;
+    //     this.questionsDuplicate = data;
+    //   }
+    // }));
   }
 
 
@@ -46,7 +65,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
 
   //opens the side-bar in edit mode
   openAdd(): void {
-    this.readonly = false;
+    this.readOnly = false;
     this.visibleData = true;
   }
 
@@ -64,7 +83,9 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
-      nzOnOk: () => this.service.deleteQuestion(id),
+      nzOnOk: () => {
+        this.store.dispatch(new QuestionListActions.DeleteQuestionAction(q))
+      },
       nzCancelText: 'No',
       nzOnCancel: () => { }
     });
@@ -72,14 +93,14 @@ export class QuestionListComponent implements OnInit, OnDestroy {
 
   //opens the side-bar in edit mode
   openEdit(qid: string): void {
-    this.readonly = false;
+    this.readOnly = false;
     this.question = this.questions.find(q => q.id === qid)
     this.visibleData = true
   }
 
   //opens the side-bar in readonly
   openView(): void {
-    this.readonly = true;
+    this.readOnly = true;
     this.visibleData = true;
   }
 

@@ -42,7 +42,7 @@
   <div [hidden]="!visibleData" class="side-bar-bg">
     <div class="side-bar">
       <app-question-data (CancelEvent)="closeAdd()" [currentQuestion]="question" (AddEvent)="closeAdd()"
-        [isReadOnly]="readonly">
+        [isReadOnly]="readOnly">
       </app-question-data>
     </div>
   </div>

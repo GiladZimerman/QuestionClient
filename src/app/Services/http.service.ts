@@ -4,6 +4,7 @@ import { Observable } from "rxjs"
 import { Injectable } from "@angular/core";
 import { IUser } from "../Models/IUser.model";
 import { environment } from "../../environments/environment"
+import { delay } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,14 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
 
-  getallQuestions(): Observable<object> {
-    return this.http.get(`${environment.baseurl}/qa`);
+  getallQuestions() {
+    return this.http.get<IQuestion[]>(`${environment.baseurl}/qa`);
 
   }
 
 
-  getQuestion(qid: string): Observable<object> {
-    return this.http.get(`${environment.baseurl}/qa/${qid}`);
+  getQuestion(qid: string) {
+    return this.http.get<IQuestion>(`${environment.baseurl}/qa/${qid}`);
 
   }
 

@@ -20,9 +20,11 @@ label {
   user-select: none;
 }
 .icon-up {
+  margin-right: 5px;
   transition: 0.25s;
 }
 .icon-down {
+  margin-right: 5px;
   transform: rotate(90deg);
   transition: 0.25s;
 }

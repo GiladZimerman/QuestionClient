@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { IQuestion } from 'src/app/Models/IQuestion.model';
 import { QuestionService } from 'src/app/Services/question.service';
+import * as fromQuestionList from '../../Services/store/question.reducer';
+import * as QuestionListActions from '../../Services/store/question.actions'
 
 @Component({
   selector: 'app-question-data',
@@ -15,7 +18,7 @@ export class QuestionDataComponent implements OnInit {
   @Input() isReadOnly: boolean = false;
   @Output() AddEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() CancelEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(private service: QuestionService) { }
+  constructor(private service: QuestionService, private store: Store<fromQuestionList.AppState>) { }
 
   ngOnInit(): void {
     this.QuestionForm = new FormGroup({
@@ -33,12 +36,14 @@ export class QuestionDataComponent implements OnInit {
       }
       if (!this.currentQuestion?.id) {
         this.QuestionForm.controls['creationDate'].setValue(new Date());
-        this.service.addQuestion(this.QuestionForm.value);
+        this.store.dispatch(new QuestionListActions.AddQuestionAction(this.QuestionForm.value));
+        //this.service.addQuestion(this.QuestionForm.value);
         this.QuestionForm.reset();
       }
       else {
         this.QuestionForm.controls['creationDate'].setValue(this.currentQuestion.creationDate);
-        this.service.editQuestion(this.currentQuestion.id, this.QuestionForm.value);
+        this.store.dispatch(new QuestionListActions.UpdateQuestionAction({ id: this.currentQuestion.id, Question: this.QuestionForm.value }))
+        //this.service.editQuestion(this.currentQuestion.id, this.QuestionForm.value);
         this.QuestionForm.reset();
         this.currentQuestion = null;
       }

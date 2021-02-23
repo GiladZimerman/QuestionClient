@@ -33,6 +33,9 @@ import { CustomHttpInterceptor } from './custom-http-interceptor';
 import { TreeComponent } from './Components/tree/tree.component';
 import { NodeComponent } from './Components/tree/node/node.component';
 import { StoreModule } from '@ngrx/store';
+import { QuestionReducer } from './Services/store/question.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { QuestionsEffects } from './Services/effects/questions.effcts';
 
 
 registerLocaleData(he);
@@ -70,7 +73,8 @@ registerLocaleData(he);
     NzModalModule,
     RouterModule,
     NzDatePickerModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({ questionList: QuestionReducer }, {}),
+    EffectsModule.forRoot([QuestionsEffects]),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
