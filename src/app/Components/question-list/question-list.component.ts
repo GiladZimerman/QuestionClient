@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { QuestionService } from "../../Services/question.service";
 import { IQuestion } from "src/app/Models/IQuestion.model";
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import * as QuestionListActions from '../../Services/store/question.actions';
 })
 export class QuestionListComponent implements OnInit, OnDestroy {
   questions: IQuestion[];
+  isSpinnerOn: boolean = true;
   tempLoading$: Observable<boolean>;
   tempError$: Observable<Error>;
   questionsDuplicate: IQuestion[];
@@ -33,11 +34,15 @@ export class QuestionListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.store.select(store => store.questionList.Questions).subscribe(data => {
+    this.subs.push(this.store.select(store => store.questionList.Questions).subscribe(data => {
       this.questions = data;
       this.questionsDuplicate = data;
 
     })
+    );
+    this.subs.push(this.store.select(store => store.questionList.loading).subscribe(data => {
+      this.isSpinnerOn = data;
+    }))
     this.tempLoading$ = this.store.select(store => store.questionList.loading);
     this.tempError$ = this.store.select(store => store.questionList.error);
 

@@ -1,5 +1,4 @@
 import * as QuestionActions from "./question.actions";
-import { QuestionService } from "../question.service";
 import { IQuestion } from '../../Models/IQuestion.model';
 
 
@@ -7,7 +6,7 @@ export interface State {
   Questions: IQuestion[];
   loading: boolean;
   error: Error;
-  currentQuestion: IQuestion;
+
 }
 
 
@@ -18,7 +17,6 @@ export interface AppState {
 
 const initialState: State = {
   Questions: [],
-  currentQuestion: null,
   loading: false,
   error: undefined
 };

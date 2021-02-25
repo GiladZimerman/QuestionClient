@@ -18,6 +18,7 @@ export class QuestionDataComponent implements OnInit {
   @Input() isReadOnly: boolean = false;
   @Output() AddEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() CancelEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(private service: QuestionService, private store: Store<fromQuestionList.AppState>) { }
 
   ngOnInit(): void {

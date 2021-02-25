@@ -15,7 +15,10 @@ export class HttpService {
 
 
   getallQuestions() {
-    return this.http.get<IQuestion[]>(`${environment.baseurl}/qa`);
+    return this.http.get<IQuestion[]>(`${environment.baseurl}/qa`)
+      .pipe(
+        delay(1000)
+      );
 
   }
 

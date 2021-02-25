@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { INode } from 'src/app/Models/INode.model';
 
 @Component({
@@ -6,15 +6,14 @@ import { INode } from 'src/app/Models/INode.model';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.css']
 })
-export class TreeComponent implements OnInit {
+export class TreeComponent implements OnInit, OnDestroy {
   @Input()
   get data(): INode[] { return this._data; }
   set data(value: INode[]) {
     this._data = value;
-
-    this.addSelectall(value)
+    this.addSelectall(this._data)
   }
-  private _data;
+  private _data: INode[];
   selectAll: boolean;
   treeData: INode = { title: "Select all", nodes: [], isChecked: false, isShown: true };
   onClickselectAll: boolean = false;
@@ -26,12 +25,26 @@ export class TreeComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  ngOnDestroy() {
+    this.reset(this.treeData);
+  }
+
+
+  reset(node: INode) {
+    node.isShown = true;
+    node.isChecked = false;
+    if (node.nodes) {
+      node.nodes.forEach(item => {
+        this.reset(item);
+      })
+    }
+  }
+
+
   addSelectall(value: INode[]) {
     if (value) {
       if (this.treeData.nodes.length > 0) {
         this.treeData.nodes = [];
-        console.log(value);
-
       }
       this.treeData.nodes = value;
     }

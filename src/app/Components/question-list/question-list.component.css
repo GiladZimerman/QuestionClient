@@ -74,3 +74,13 @@ button {
 .large {
   width: 25%;
 }
+
+.spinner-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner {
+  font-size: 125px;
+}

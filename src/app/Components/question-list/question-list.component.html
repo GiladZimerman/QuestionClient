@@ -1,4 +1,4 @@
-<div class="layout">
+<div class="layout" *ngIf="!isSpinnerOn">
   <div class="layout-items">
     <div class="search-container">
       <nz-input-group class="search" [nzSuffix]="suffixIconSearch">
@@ -46,4 +46,8 @@
       </app-question-data>
     </div>
   </div>
+</div>
+<div *ngIf="isSpinnerOn" class="spinner-container">
+  <ng-template #indicatorTemplate><i class="spinner" nz-icon nzType="loading"></i></ng-template>
+  <nz-spin nzTip="Loading..." nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
 </div>

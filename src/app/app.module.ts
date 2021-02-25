@@ -36,6 +36,7 @@ import { StoreModule } from '@ngrx/store';
 import { QuestionReducer } from './Services/store/question.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { QuestionsEffects } from './Services/effects/questions.effcts';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 
 registerLocaleData(he);
@@ -73,6 +74,7 @@ registerLocaleData(he);
     NzModalModule,
     RouterModule,
     NzDatePickerModule,
+    NzSpinModule,
     StoreModule.forRoot({ questionList: QuestionReducer }, {}),
     EffectsModule.forRoot([QuestionsEffects]),
   ],
